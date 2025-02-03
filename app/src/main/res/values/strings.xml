@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">TestReminder</string>
+    <string name="app_name">Reminder and Habits Tracker</string>
     <string name="app_reminder">YourReminder</string>
     <string name="add_task">Add Task</string>
     <string name="add_your_task_first">Add your Task first...</string>
