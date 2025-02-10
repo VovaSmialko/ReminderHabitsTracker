@@ -16,4 +16,8 @@
     <string name="search_action">Search Notes</string>
     <string name="sort_action">Sort Notes</string>
     <string name="delete_all_action">Delete All</string>
+
+    <string name="navigation_item_tasks"> Tasks </string>
+    <string name="navigation_item_habits"> Habits </string>
+    <string name="navigation_item_Settings"> Settings </string>
 </resources>

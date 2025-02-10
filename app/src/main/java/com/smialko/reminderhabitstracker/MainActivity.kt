@@ -7,18 +7,15 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
-import androidx.navigation.NavHostController
-import androidx.navigation.compose.rememberNavController
+import com.smialko.reminderhabitstracker.presentation.screens.main.MainScreen
+import com.smialko.reminderhabitstracker.presentation.screens.main.TasksViewModel
 import com.smialko.reminderhabitstracker.ui.theme.ReminderHabitsTrackerTheme
-import com.smialko.reminderhabitstracker.navigation.AppNavGraph
-import com.smialko.reminderhabitstracker.presentation.ui.viewModel.SharedViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
-    private lateinit var navController: NavHostController
-    private val sharedViewModel: SharedViewModel by viewModels()
+    private val tasksViewModel: TasksViewModel by viewModels()
 
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -26,8 +23,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             ReminderHabitsTrackerTheme {
-                navController = rememberNavController()
-                AppNavGraph(navController, sharedViewModel)
+                MainScreen(tasksViewModel)
             }
         }
     }

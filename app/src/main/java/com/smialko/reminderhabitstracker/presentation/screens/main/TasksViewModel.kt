@@ -1,17 +1,16 @@
-package com.smialko.reminderhabitstracker.presentation.ui.viewModel
+package com.smialko.reminderhabitstracker.presentation.screens.main
 
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.smialko.reminderhabitstracker.domain.entity.Priority
 import com.smialko.reminderhabitstracker.data.repository.DataStore
 import com.smialko.reminderhabitstracker.data.repository.TodoRepository
+import com.smialko.reminderhabitstracker.domain.entity.Priority
 import com.smialko.reminderhabitstracker.domain.entity.Repeats
 import com.smialko.reminderhabitstracker.domain.entity.ToDoTask
 import com.smialko.reminderhabitstracker.utils.Constants.MAX_TITLE_LENGTH
-import com.smialko.reminderhabitstracker.utils.RequestState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -24,7 +23,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class SharedViewModel @Inject constructor(
+class TasksViewModel @Inject constructor(
     private val repo: TodoRepository,
     private val dataStore: DataStore
 ) : ViewModel() {
@@ -36,9 +35,9 @@ class SharedViewModel @Inject constructor(
     val repeat: MutableState<Repeats> = mutableStateOf(Repeats.DAILY)
     val time: MutableState<String> = mutableStateOf("")
 
+
     private val _allTasks = MutableStateFlow<RequestState<List<ToDoTask>>>(RequestState.Initial)
     val allTasks: StateFlow<RequestState<List<ToDoTask>>> = _allTasks.asStateFlow()
-
 
     val lowPriorityTasks: StateFlow<List<ToDoTask>> =
         repo.sortByLowPriority.stateIn(
