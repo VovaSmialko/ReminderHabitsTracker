@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.smialko.reminderhabitstracker.data.TodoDatabase
 import com.smialko.reminderhabitstracker.presentation.notification.workers.ChildWorkerFactory
 import com.smialko.reminderhabitstracker.presentation.notification.workers.RemindMeWorker
-import com.smialko.reminderhabitstracker.presentation.ui.viewModel.SharedViewModel
+import com.smialko.reminderhabitstracker.presentation.screens.main.TasksViewModel
 import com.smialko.reminderhabitstracker.presentation.ui.viewModel.ViewModelFactory
 import dagger.Binds
 import dagger.Module
@@ -43,9 +43,9 @@ interface ViewModelModule {
 
 
     @IntoMap
-    @ViewModelKey(SharedViewModel::class)
+    @ViewModelKey(TasksViewModel::class)
     @Binds
-    fun bindSharedViewModel(viewModel: SharedViewModel): ViewModel
+    fun bindSharedViewModel(viewModel: TasksViewModel): ViewModel
 }
 
 @Module

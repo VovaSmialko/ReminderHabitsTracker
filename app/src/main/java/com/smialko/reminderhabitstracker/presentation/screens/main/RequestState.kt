@@ -1,4 +1,4 @@
-package com.smialko.reminderhabitstracker.utils
+package com.smialko.reminderhabitstracker.presentation.screens.main
 
 sealed class RequestState<out T> {
     data object Initial : RequestState<Nothing>()

@@ -1,10 +1,12 @@
 package com.smialko.reminderhabitstracker.presentation.screens.listReminderContent
 
+import android.util.Log
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -48,8 +50,8 @@ import com.smialko.reminderhabitstracker.domain.entity.Priority
 import com.smialko.reminderhabitstracker.domain.entity.ToDoTask
 import com.smialko.reminderhabitstracker.ui.theme.MEDIUM_PADDING
 import com.smialko.reminderhabitstracker.ui.theme.PRIORITY_INDICATOR_SIZE_LIST
-import com.smialko.reminderhabitstracker.presentation.ui.viewModel.SharedViewModel
-import com.smialko.reminderhabitstracker.utils.RequestState
+import com.smialko.reminderhabitstracker.presentation.screens.main.TasksViewModel
+import com.smialko.reminderhabitstracker.presentation.screens.main.RequestState
 
 @Composable
 fun ListContent(
@@ -58,7 +60,7 @@ fun ListContent(
     highPriority: List<ToDoTask>,
     sortState: RequestState<Priority>,
     navigateToTaskScreen: (taskId: Int) -> Unit,
-    sharedViewModel: SharedViewModel,
+    tasksViewModel: TasksViewModel,
 ) {
     if (sortState is RequestState.Success) {
         when (sortState.data) {
@@ -67,7 +69,7 @@ fun ListContent(
                     HandleListContent(
                         tasks = tasks.data,
                         navigateToTaskScreen = navigateToTaskScreen,
-                        sharedViewModel
+                        tasksViewModel
                     )
                 }
             }
@@ -76,7 +78,7 @@ fun ListContent(
                 HandleListContent(
                     tasks = lowPriority,
                     navigateToTaskScreen = navigateToTaskScreen,
-                    sharedViewModel
+                    tasksViewModel
                 )
             }
 
@@ -84,7 +86,7 @@ fun ListContent(
                 HandleListContent(
                     tasks = highPriority,
                     navigateToTaskScreen = navigateToTaskScreen,
-                    sharedViewModel
+                    tasksViewModel
                 )
             }
 
@@ -97,12 +99,17 @@ fun ListContent(
 @Composable
 fun DisplayTasks(
     tasks: List<ToDoTask>,
-    sharedViewModel: SharedViewModel,
+    tasksViewModel: TasksViewModel,
     navigateToTaskScreen: (taskId: Int) -> Unit,
 ) {
-    LazyColumn(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+    LazyColumn(
+        contentPadding = PaddingValues(bottom = 76.dp),
+        verticalArrangement = Arrangement.spacedBy(8.dp)
+    )
+    {
         items(tasks) { task ->
-            TaskItem(task, navigateToTaskScreen, sharedViewModel)
+            Log.d("DisplayTasks", "Rendering element: $task")
+            TaskItem(task, navigateToTaskScreen, tasksViewModel)
         }
     }
 }
@@ -111,7 +118,7 @@ fun DisplayTasks(
 fun TaskItem(
     toDoTask: ToDoTask,
     navigateToTaskScreen: (taskId: Int) -> Unit,
-    sharedViewModel: SharedViewModel,
+    tasksViewModel: TasksViewModel,
 ) {
 
     var showMenu by remember { mutableStateOf(false) }
@@ -140,8 +147,8 @@ fun TaskItem(
                     .padding(MEDIUM_PADDING),
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Canvas(modifier = Modifier.size(PRIORITY_INDICATOR_SIZE_LIST)){
-                    drawCircle(color= toDoTask.priority.color)
+                Canvas(modifier = Modifier.size(PRIORITY_INDICATOR_SIZE_LIST)) {
+                    drawCircle(color = toDoTask.priority.color)
                 }
                 Column {
                     Text(
@@ -196,7 +203,7 @@ fun TaskItem(
                             text = { Text(stringResource(R.string.delete), color = Color.Red) },
                             onClick = {
                                 showMenu = false
-                                sharedViewModel.deleteTask(toDoTask)
+                                tasksViewModel.deleteTask(toDoTask)
                             }
                         )
                     }
@@ -248,14 +255,14 @@ fun TaskItem(
 fun HandleListContent(
     tasks: List<ToDoTask>,
     navigateToTaskScreen: (taskId: Int) -> Unit,
-    sharedViewModel: SharedViewModel,
+    tasksViewModel: TasksViewModel,
 ) {
     if (tasks.isEmpty()) {
         EmptyReminderContent()
     }
     DisplayTasks(
         tasks = tasks,
-        sharedViewModel = sharedViewModel,
+        tasksViewModel = tasksViewModel,
         navigateToTaskScreen = navigateToTaskScreen,
     )
 }

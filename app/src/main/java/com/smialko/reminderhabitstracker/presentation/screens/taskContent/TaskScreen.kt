@@ -18,21 +18,21 @@ import androidx.navigation.NavHostController
 import com.smialko.reminderhabitstracker.domain.entity.Priority
 import com.smialko.reminderhabitstracker.domain.entity.Repeats
 import com.smialko.reminderhabitstracker.domain.entity.ToDoTask
-import com.smialko.reminderhabitstracker.presentation.ui.viewModel.SharedViewModel
+import com.smialko.reminderhabitstracker.presentation.screens.main.TasksViewModel
 
 @RequiresApi(Build.VERSION_CODES.TIRAMISU)
 @Composable
 fun TaskScreen(
     selectedTask: ToDoTask?,
-    navController: NavController,
-    sharedViewModel: SharedViewModel
+    navController: NavHostController,
+    tasksViewModel: TasksViewModel
 ) {
 
-    val title: String by sharedViewModel.title
-    val priority: Priority by sharedViewModel.priority
-    val date: String by sharedViewModel.date
-    val time: String by sharedViewModel.time
-    val repeat: Repeats by sharedViewModel.repeat
+    val title: String by tasksViewModel.title
+    val priority: Priority by tasksViewModel.priority
+    val date: String by tasksViewModel.date
+    val time: String by tasksViewModel.time
+    val repeat: Repeats by tasksViewModel.repeat
 
     val context = LocalContext.current
 
@@ -40,7 +40,7 @@ fun TaskScreen(
         containerColor = Color.Transparent,
         contentColor = MaterialTheme.colorScheme.surface,
         topBar = {
-            TaskCenterAppBar(selectedTask, navController, sharedViewModel)
+            TaskCenterAppBar(selectedTask, navController, tasksViewModel)
 
         }
     ) { padding ->
@@ -53,23 +53,23 @@ fun TaskScreen(
             TaskContent(
                 title = title,
                 onTitleChange = {
-                    sharedViewModel.updateTitle(it)
+                    tasksViewModel.updateTitle(it)
                 },
                 priority = priority,
                 onPrioritySelected = {
-                    sharedViewModel.priority.value = it
+                    tasksViewModel.priority.value = it
                 },
                 repeat = repeat,
                 onRepeatsSelected = {
-                    sharedViewModel.repeat.value = it
+                    tasksViewModel.repeat.value = it
                 },
                 date = date,
                 onDateChange = {
-                    sharedViewModel.updateDate(it)
+                    tasksViewModel.updateDate(it)
                 },
                 time = time,
                 onTimeChange = {
-                    sharedViewModel.updateTime(it)
+                    tasksViewModel.updateTime(it)
                 },
                 context = context,
                 navController = NavHostController(context)

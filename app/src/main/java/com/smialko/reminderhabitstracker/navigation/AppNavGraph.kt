@@ -1,29 +1,34 @@
 package com.smialko.reminderhabitstracker.navigation
 
-import android.os.Build
-import androidx.annotation.RequiresApi
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
+import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
-import com.smialko.reminderhabitstracker.navigation.destinations.listComposable
-import com.smialko.reminderhabitstracker.navigation.destinations.taskComposable
-import com.smialko.reminderhabitstracker.presentation.ui.viewModel.SharedViewModel
-import com.smialko.reminderhabitstracker.utils.Constants.LIST_SCREEN
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.navigation
+import com.smialko.reminderhabitstracker.domain.entity.ToDoTask
 
-@RequiresApi(Build.VERSION_CODES.TIRAMISU)
 @Composable
 fun AppNavGraph(
     navHostController: NavHostController,
-    sharedViewModel: SharedViewModel
+    routineMainScreenContent: @Composable () -> Unit,
+    addTaskScreenContent: @Composable (Int) -> Unit,
+    habitsScreenContent: @Composable () -> Unit,
+    settingsScreenContent: @Composable () -> Unit
 ) {
-    val screen = remember(navHostController) {
-        Screens(navHostController)
-
-    }
-
-    NavHost(navController = navHostController, startDestination = LIST_SCREEN) {
-        listComposable(screen.task, sharedViewModel)
-        taskComposable(navHostController, sharedViewModel)
+    NavHost(
+        navController = navHostController,
+        startDestination = Screen.Home.route
+    ) {
+        homeScreenNavGraph(
+            routineMainScreenContent = routineMainScreenContent,
+            addTaskScreenContent = addTaskScreenContent
+        )
+        composable(Screen.Habits.route) {
+            habitsScreenContent()
+        }
+        composable(Screen.Settings.route) {
+            settingsScreenContent()
+        }
     }
 }

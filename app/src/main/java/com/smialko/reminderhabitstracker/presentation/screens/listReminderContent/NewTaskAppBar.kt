@@ -30,15 +30,16 @@ import androidx.compose.ui.unit.sp
 import com.smialko.reminderhabitstracker.R
 import com.smialko.reminderhabitstracker.components.PriorityItem
 import com.smialko.reminderhabitstracker.domain.entity.Priority
-import com.smialko.reminderhabitstracker.presentation.ui.viewModel.SharedViewModel
+import com.smialko.reminderhabitstracker.domain.entity.ToDoTask
+import com.smialko.reminderhabitstracker.presentation.screens.main.TasksViewModel
 
 @Composable
 fun NewTaskAppBar(
     onAddTaskClicked: (taskId: Int) -> Unit,
-    sharedViewModel: SharedViewModel
+    tasksViewModel: TasksViewModel
 ) {
     DefaultListCenterAppBar(
-        onSortClicked = { sharedViewModel.persistSortState(it) },
+        onSortClicked = { tasksViewModel.persistSortState(it) },
         onAddTaskClicked = onAddTaskClicked
     )
 }

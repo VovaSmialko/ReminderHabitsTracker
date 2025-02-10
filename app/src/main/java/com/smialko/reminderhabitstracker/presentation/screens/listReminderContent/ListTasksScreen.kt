@@ -1,7 +1,8 @@
-package com.smialko.testreminder.presentation.screens.listReminderContent
+package com.smialko.reminderhabitstracker.presentation.screens.listReminderContent
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.HorizontalDivider
@@ -12,32 +13,32 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import com.smialko.reminderhabitstracker.presentation.screens.listReminderContent.ListContent
-import com.smialko.reminderhabitstracker.presentation.screens.listReminderContent.NewTaskAppBar
-import com.smialko.reminderhabitstracker.presentation.ui.viewModel.SharedViewModel
+import com.smialko.reminderhabitstracker.domain.entity.ToDoTask
+import com.smialko.reminderhabitstracker.presentation.screens.main.TasksViewModel
 
 @Composable
 fun ListScreen(
+    paddingValues: PaddingValues,
     navigateToTaskScreen: (taskId: Int) -> Unit,
-    sharedViewModel: SharedViewModel,
+    tasksViewModel: TasksViewModel,
 ) {
     LaunchedEffect(key1 = true) {
-        sharedViewModel.getAllTasks()
-        sharedViewModel.readSortState()
+        tasksViewModel.getAllTasks()
+        tasksViewModel.readSortState()
     }
 
-    val allTasks = sharedViewModel.allTasks.collectAsState()
+    val allTasks = tasksViewModel.allTasks.collectAsState()
 
-    val sortState = sharedViewModel.sortState.collectAsState()
-    val lowPriority = sharedViewModel.lowPriorityTasks.collectAsState()
-    val highPriority = sharedViewModel.highPriorityTasks.collectAsState()
+    val sortState = tasksViewModel.sortState.collectAsState()
+    val lowPriority = tasksViewModel.lowPriorityTasks.collectAsState()
+    val highPriority = tasksViewModel.highPriorityTasks.collectAsState()
 
     Scaffold(
         containerColor = Color.Transparent,
         contentColor = MaterialTheme.colorScheme.surface,
         topBar = {
             NewTaskAppBar(
-                sharedViewModel = sharedViewModel,
+                tasksViewModel = tasksViewModel,
                 onAddTaskClicked = navigateToTaskScreen
             )
         }
@@ -55,7 +56,7 @@ fun ListScreen(
                 highPriority = highPriority.value,
                 sortState = sortState.value,
                 navigateToTaskScreen = navigateToTaskScreen,
-                sharedViewModel = sharedViewModel,
+                tasksViewModel = tasksViewModel,
             )
         }
     }

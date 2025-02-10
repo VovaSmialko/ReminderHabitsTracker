@@ -23,20 +23,21 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import androidx.navigation.NavHostController
 import com.smialko.reminderhabitstracker.R
 import com.smialko.reminderhabitstracker.domain.entity.ToDoTask
-import com.smialko.reminderhabitstracker.presentation.ui.viewModel.SharedViewModel
+import com.smialko.reminderhabitstracker.presentation.screens.main.TasksViewModel
 
 @Composable
 fun TaskCenterAppBar(
     selectedTask: ToDoTask?,
-    navController: NavController,
-    sharedViewModel: SharedViewModel,
+    navController: NavHostController,
+    tasksViewModel: TasksViewModel,
 ) {
     ExistingTaskAppBar(
         selectedTask = selectedTask,
         navController = navController,
-        sharedViewModel = sharedViewModel
+        tasksViewModel = tasksViewModel
     )
 }
 
@@ -45,8 +46,8 @@ fun TaskCenterAppBar(
 @Composable
 fun ExistingTaskAppBar(
     selectedTask: ToDoTask?,
-    navController: NavController,
-    sharedViewModel: SharedViewModel,
+    navController: NavHostController,
+    tasksViewModel: TasksViewModel,
 ) {
     CenterAlignedTopAppBar(
         navigationIcon = {
@@ -63,7 +64,7 @@ fun ExistingTaskAppBar(
             UpdateAddAction(
                 selectedTask = selectedTask,
                 navController = navController,
-                sharedViewModel = sharedViewModel,
+                tasksViewModel = tasksViewModel,
             )
         }
     )
@@ -88,22 +89,22 @@ fun CloseAction(navController: NavController) {
 @Composable
 fun UpdateAddAction(
     selectedTask: ToDoTask?,
-    navController: NavController,
-    sharedViewModel: SharedViewModel
+    navController: NavHostController,
+    tasksViewModel: TasksViewModel
 ) {
     val context = LocalContext.current
     IconButton(
         modifier = Modifier.padding(end = 16.dp),
         onClick = {
             if (selectedTask == null) {
-                if (sharedViewModel.validateFields()) {
-                    sharedViewModel.addTask()
+                if (tasksViewModel.validateFields()) {
+                    tasksViewModel.addTask()
                     navController.navigateUp()
                 } else {
                     displayToast(context)
                 }
             } else {
-                sharedViewModel.updateTask()
+                tasksViewModel.updateTask()
                 navController.navigateUp()
             }
         }) {
