@@ -21,3 +21,9 @@ val LowPriorityColor = Color(0xFF40DA00)
 val MediumPriorityColor = Color(0xff005CBB)
 val HighPriorityColor = Color(0xFFFF0000)
 val NonePriorityColor = Color(0xff808080)
+
+
+val Primary = Color(0xFF748774)
+val BrandColor = Color(0xff005CBB)
+val BorderColor = Color(0xFFEBF1EC)
+val BgSocial = Color(0xFFebf1ed)
