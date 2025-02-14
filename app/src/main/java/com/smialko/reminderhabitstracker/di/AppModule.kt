@@ -3,6 +3,7 @@ package com.smialko.reminderhabitstracker.di
 import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.smialko.reminderhabitstracker.MainViewModel
 import com.smialko.reminderhabitstracker.data.TodoDatabase
 import com.smialko.reminderhabitstracker.presentation.notification.workers.ChildWorkerFactory
 import com.smialko.reminderhabitstracker.presentation.notification.workers.RemindMeWorker
@@ -40,6 +41,11 @@ interface ViewModelModule {
     //ViewModel factory
     @Binds
     fun bindViewModelFactory(factory: ViewModelFactory): ViewModelProvider.Factory
+
+    @IntoMap
+    @ViewModelKey(MainViewModel::class)
+    @Binds
+    fun bindMainViewModel(viewModel: MainViewModel): ViewModel
 
 
     @IntoMap

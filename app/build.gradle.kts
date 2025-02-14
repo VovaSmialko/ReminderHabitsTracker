@@ -4,6 +4,7 @@ plugins {
     alias(libs.plugins.hilt.plugin)
     alias(libs.plugins.ksp)
     alias(libs.plugins.parcelize)
+    alias(libs.plugins.google.app)
 }
 
 android {
@@ -101,4 +102,14 @@ dependencies {
 
     //Startup
     implementation(libs.androidx.startup.runtime)
+
+    //Splash Api
+    implementation(libs.splash.core)
+
+    //Firebase
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.firebase.auth)
+
+    implementation(libs.firebase.analytics)
+
 }

@@ -20,4 +20,6 @@
     <string name="navigation_item_tasks"> Tasks </string>
     <string name="navigation_item_habits"> Habits </string>
     <string name="navigation_item_Settings"> Settings </string>
+    <string name="dont_worry">Don\'t worry, strange things happen. Please enter the email address associated with your account.</string>
+    <string name="forgot_password">Forgot Password?</string>
 </resources>
