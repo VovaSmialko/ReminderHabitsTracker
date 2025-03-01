@@ -6,7 +6,6 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import androidx.navigation.navArgument
-import com.smialko.reminderhabitstracker.domain.entity.ToDoTask
 import com.smialko.reminderhabitstracker.navigation.Screen.Companion.KEY_TASK_ID
 
 fun NavGraphBuilder.homeScreenNavGraph(

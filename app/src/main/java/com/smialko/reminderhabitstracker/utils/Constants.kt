@@ -2,6 +2,10 @@ package com.smialko.reminderhabitstracker.utils
 
 object Constants {
 
+    //Firebase
+
+    const val USER_COLLECTION = "user"
+
     //DB
 
     const val DATABASE_TABLE = "todo_table"

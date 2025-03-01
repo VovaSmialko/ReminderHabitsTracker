@@ -1,4 +1,4 @@
-package com.smialko.reminderhabitstracker.data
+package com.smialko.reminderhabitstracker.data.db
 
 import android.content.Context
 import androidx.room.Database

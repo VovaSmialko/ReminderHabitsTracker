@@ -6,7 +6,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.smialko.reminderhabitstracker.data.repository.DataStore
-import com.smialko.reminderhabitstracker.data.repository.TodoRepository
+import com.smialko.reminderhabitstracker.data.repository.TodoRepositoryImpl
 import com.smialko.reminderhabitstracker.domain.entity.Priority
 import com.smialko.reminderhabitstracker.domain.entity.Repeats
 import com.smialko.reminderhabitstracker.domain.entity.ToDoTask
@@ -24,7 +24,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class TasksViewModel @Inject constructor(
-    private val repo: TodoRepository,
+    private val repo: TodoRepositoryImpl,
     private val dataStore: DataStore
 ) : ViewModel() {
 
