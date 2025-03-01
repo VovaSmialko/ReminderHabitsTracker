@@ -1,4 +1,4 @@
-package com.smialko.reminderhabitstracker.data
+package com.smialko.reminderhabitstracker.data.db
 
 import androidx.room.Dao
 import androidx.room.Delete

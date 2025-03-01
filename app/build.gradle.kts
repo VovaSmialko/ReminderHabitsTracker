@@ -66,6 +66,8 @@ dependencies {
 
     implementation(libs.androidx.compose.material)
     implementation(libs.icons)
+    implementation(libs.firebase.firestore)
+    implementation(libs.firebase.storage)
 
     //testing
     testImplementation(libs.junit)

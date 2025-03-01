@@ -11,6 +11,11 @@ import com.smialko.reminderhabitstracker.domain.entity.ToDoTask
 @Composable
 fun AppNavGraph(
     navHostController: NavHostController,
+    splashScreeContent: @Composable () -> Unit,
+    loginScreenContent: @Composable () -> Unit,
+    signUpScreenContent: @Composable () -> Unit,
+    forgotPasswordScreenContent: @Composable () -> Unit,
+    resetPasswordScreenContent: @Composable () -> Unit,
     routineMainScreenContent: @Composable () -> Unit,
     addTaskScreenContent: @Composable (Int) -> Unit,
     habitsScreenContent: @Composable () -> Unit,
@@ -18,8 +23,23 @@ fun AppNavGraph(
 ) {
     NavHost(
         navController = navHostController,
-        startDestination = Screen.Home.route
+        startDestination = Screen.Splash.route
     ) {
+        composable(Screen.Splash.route) {
+            splashScreeContent()
+        }
+        composable(Screen.Login.route) {
+            loginScreenContent()
+        }
+        composable(Screen.SingUp.route) {
+            signUpScreenContent()
+        }
+        composable(Screen.ForgotPassword.route) {
+            forgotPasswordScreenContent()
+        }
+        composable(Screen.ResetPassword.route) {
+            resetPasswordScreenContent()
+        }
         homeScreenNavGraph(
             routineMainScreenContent = routineMainScreenContent,
             addTaskScreenContent = addTaskScreenContent

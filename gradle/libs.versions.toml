@@ -22,6 +22,8 @@ hiltCompiler = "1.2.0"
 androidx-core = "1.0.1"
 google = "4.4.2"
 firebaseBom = "32.7.0"
+firebaseFirestore = "25.1.2"
+firebaseStorage = "21.0.1"
 
 
 [libraries]
@@ -44,6 +46,7 @@ androidx-compose-bom = { group = "androidx.compose", name = "compose-bom", versi
 #Firebase
 firebase-bom = { group = "com.google.firebase", name = "firebase-bom", version.ref = "firebaseBom" }
 firebase-analytics = { group = "com.google.firebase", name = "firebase-analytics" }
+firebase-firestore = { group = "com.google.firebase", name = "firebase-firestore", version.ref = "firebaseFirestore" }
 
 splash-core = { group = "androidx.core", name = "core-splashscreen", version.ref = "androidx-core" }
 
@@ -69,6 +72,8 @@ glide-compose = { group = "com.github.bumptech.glide", name = "compose", version
 
 room-core = { group = "androidx.room", name = "room-ktx", version.ref = "room" }
 room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "room" }
+firebase-storage = { group = "com.google.firebase", name = "firebase-storage", version.ref = "firebaseStorage" }
+
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
