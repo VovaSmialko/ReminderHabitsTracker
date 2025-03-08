@@ -5,10 +5,8 @@ import androidx.lifecycle.ViewModelProvider
 import com.smialko.reminderhabitstracker.MainViewModel
 import com.smialko.reminderhabitstracker.di.ViewModelKey
 import com.smialko.reminderhabitstracker.presentation.onBoarding.AuthViewModel
-import com.smialko.reminderhabitstracker.presentation.onBoarding.forgotPassword.ForgotPasswordViewModel
-import com.smialko.reminderhabitstracker.presentation.onBoarding.resetPassword.ResetPasswordViewModel
 import com.smialko.reminderhabitstracker.presentation.screens.main.TasksViewModel
-import com.smialko.reminderhabitstracker.presentation.screens.settings.SettingsViewModel
+import com.smialko.reminderhabitstracker.presentation.screens.profile.ProfileViewModel
 import com.smialko.reminderhabitstracker.presentation.ui.viewModel.ViewModelFactory
 import dagger.Binds
 import dagger.Module
@@ -35,23 +33,12 @@ interface ViewModelModule {
     fun bindAuthViewModel(viewModel: AuthViewModel): ViewModel
 
     @IntoMap
-    @ViewModelKey(ResetPasswordViewModel::class)
-    @Binds
-    fun bindResetPasswordViewModel(viewModel: ResetPasswordViewModel): ViewModel
-
-    @IntoMap
-    @ViewModelKey(ForgotPasswordViewModel::class)
-    @Binds
-    fun bindForgotPasswordViewModel(viewModel: ForgotPasswordViewModel): ViewModel
-
-
-    @IntoMap
     @ViewModelKey(TasksViewModel::class)
     @Binds
     fun bindSharedViewModel(viewModel: TasksViewModel): ViewModel
 
     @IntoMap
-    @ViewModelKey(SettingsViewModel::class)
+    @ViewModelKey(ProfileViewModel::class)
     @Binds
-    fun bindSettingsViewModel(viewModel: SettingsViewModel): ViewModel
+    fun bindProfileViewModel(viewModel: ProfileViewModel): ViewModel
 }

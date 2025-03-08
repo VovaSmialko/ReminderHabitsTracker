@@ -9,7 +9,7 @@ interface UserRepository {
     fun getUserDetails(userId: String): Flow<Response<User>>
     fun setUserDatails(
         userId: String,
-        firstName: String,
-        secondName: String
+        fullName: String,
+        email: String
     ): Flow<Response<Boolean>>
 }
