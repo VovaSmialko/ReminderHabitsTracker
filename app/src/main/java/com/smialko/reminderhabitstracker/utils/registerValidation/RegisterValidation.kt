@@ -1,7 +1,6 @@
 package com.smialko.reminderhabitstracker.utils.registerValidation
 
 sealed class RegisterValidation() {
-
     data object Success : RegisterValidation()
     data class Failed(val message: String) : RegisterValidation()
 }

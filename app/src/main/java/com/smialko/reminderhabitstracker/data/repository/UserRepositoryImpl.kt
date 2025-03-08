@@ -35,13 +35,13 @@ class UserRepositoryImpl @Inject constructor(
     }
 
     override fun setUserDatails(
-        userId: String, firstName: String, secondName: String
+        userId: String, fullName: String, email: String
     ): Flow<Response<Boolean>> = flow {
         emit(Response.Loading)
 
         val userObj = mapOf(
-            "firstName" to firstName,
-            "secondName" to secondName
+            "fullName" to fullName,
+            "email" to email
         )
         runCatching {
             firebaseFirestore.collection(USER_COLLECTION)

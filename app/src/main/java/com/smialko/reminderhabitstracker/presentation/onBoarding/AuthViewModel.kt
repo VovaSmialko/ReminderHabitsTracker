@@ -17,6 +17,7 @@ import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -28,42 +29,22 @@ class AuthViewModel @Inject constructor(
     private val db: FirebaseFirestore
 ) : ViewModel() {
 
-    val email = mutableStateOf("")
-
-    val password = mutableStateOf("")
-
-    val firstName = mutableStateOf("")
-
-    val secondName = mutableStateOf("")
-
     val isUserAuthenticated get() = authUseCases.isUserAuthenticated()
-
 
     private val _signInState = mutableStateOf<Response<Boolean>>(Response.Success(false))
     val signInState: State<Response<Boolean>> = _signInState
 
-    private val _signUpState = mutableStateOf<Response<Boolean>>(Response.Success(false))
-    val signUpState: State<Response<Boolean>> = _signUpState
+    private val _signUpState = MutableStateFlow<Response<Boolean>>(Response.Success(false))
+    val signUpState: StateFlow<Response<Boolean>> = _signUpState.asStateFlow()
 
-    private val _signOutState = mutableStateOf<Response<Boolean>>(Response.Success(false))
-    val signOutState: State<Response<Boolean>> = _signOutState
+    private val _sendResetPassword = MutableStateFlow<Response<Boolean>>(Response.Success(false))
+    val sendResetPassword: StateFlow<Response<Boolean>> = _sendResetPassword.asStateFlow()
 
     private val _fireBaseAuthState = mutableStateOf(false)
     val firebaseAuthState: State<Boolean> = _fireBaseAuthState
 
     private val _validation = Channel<RegisterFieldsState>()
     val validation = _validation.receiveAsFlow()
-
-    fun signOut() {
-        viewModelScope.launch {
-            authUseCases.firebaseSignOutUseCase().collect {
-                _signOutState.value = it
-                if (it == Response.Success(true)) {
-                    _signInState.value = Response.Success(false)
-                }
-            }
-        }
-    }
 
     fun signIn(email: String, password: String) {
         viewModelScope.launch {
@@ -73,10 +54,20 @@ class AuthViewModel @Inject constructor(
         }
     }
 
-    fun signUp(email: String, password: String, firstName: String, lastName: String) {
-        viewModelScope.launch {
-            authUseCases.firebaseSignUpUseCase(email, password, firstName, lastName).collect {
-                _signUpState.value = it
+    fun signUp(email: String, password: String, fullName: String) {
+        if (checkValidation(email, password)) {
+            viewModelScope.launch {
+                authUseCases.firebaseSignUpUseCase(email, password, fullName).collect {
+                    _signUpState.value = it
+                }
+            }
+        } else {
+            val registerFieldsState = RegisterFieldsState(
+                validateEmail(email),
+                validatePassword(password)
+            )
+            viewModelScope.launch {
+                _validation.send(registerFieldsState)
             }
         }
     }
@@ -89,23 +80,13 @@ class AuthViewModel @Inject constructor(
         }
     }
 
-
-    fun updateEmail(newEmail: String) {
-        email.value = newEmail
+    fun resetPassword(email: String) {
+        viewModelScope.launch {
+            authUseCases.firebaseResetPasswordUseCase(email).collect {
+                _sendResetPassword.value = it
+            }
+        }
     }
-
-    fun updatePassword(newPass: String) {
-        password.value = newPass
-    }
-
-    fun updateFirstName(newFirstName: String) {
-        firstName.value = newFirstName
-    }
-
-    fun updateSecondName(newSecondName: String) {
-        secondName.value = newSecondName
-    }
-
 
     private fun checkValidation(email: String, password: String): Boolean {
         val emailValidation = validateEmail(email)
@@ -116,5 +97,4 @@ class AuthViewModel @Inject constructor(
 
         return shouldRegister
     }
-
 }

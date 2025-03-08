@@ -12,7 +12,7 @@ class NavigationState(
 ) {
     fun navigateTo(route: String) {
         navHostController.navigate(route) {
-            popUpTo(navHostController.graph.findStartDestination().id) {
+            popUpTo(Screen.ListTasks.route) {
                 saveState = true
             }
             launchSingleTop = true

@@ -51,7 +51,7 @@ fun ImageComponent(image: Int) {
         contentDescription = null,
         modifier = Modifier
             .fillMaxWidth()
-            .size(250.dp)
+            .size(180.dp)
     )
 }
 

@@ -53,25 +53,35 @@ class AuthenticationRepositoryImpl @Inject constructor(
     override fun firebaseSignUp(
         email: String,
         password: String,
-        firstName: String,
-        lastName: String
+        fullName: String,
     ): Flow<Response<Boolean>> = flow {
         emit(Response.Loading)
         runCatching {
             val authResult = firebaseAuth.createUserWithEmailAndPassword(email, password).await()
             val userId = authResult.user?.uid ?: throw Exception("Failed to retrieve user ID")
             val user = User(
-                firstName = firstName,
-                lastName = lastName,
+                fullName = fullName,
                 userId = userId,
                 email = email,
                 password = password
             )
             saveUserInfo(userId, user)
             emit(Response.Success(true))
-        }.onFailure {e ->
+        }.onFailure { e ->
             emit(Response.Error(e.localizedMessage ?: "An Unexpected error"))
         }
+    }
+
+    override fun firebaseResetPassword(email: String): Flow<Response<Boolean>> = flow {
+        emit(Response.Loading)
+        runCatching {
+            firebaseAuth.sendPasswordResetEmail(email).await()
+        }.onSuccess {
+            emit(Response.Success(true))
+        }.onFailure { e ->
+            emit(Response.Error(e.localizedMessage ?: "An Unexpected error"))
+        }
+
     }
 
     private suspend fun saveUserInfo(

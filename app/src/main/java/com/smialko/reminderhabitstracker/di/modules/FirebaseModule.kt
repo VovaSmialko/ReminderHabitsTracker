@@ -11,6 +11,7 @@ import com.smialko.reminderhabitstracker.domain.repository.AuthenticationReposit
 import com.smialko.reminderhabitstracker.domain.repository.UserRepository
 import com.smialko.reminderhabitstracker.domain.usecases.firebaseUsecases.AuthenticationUseCases
 import com.smialko.reminderhabitstracker.domain.usecases.firebaseUsecases.FirebaseAuthStateUseCase
+import com.smialko.reminderhabitstracker.domain.usecases.firebaseUsecases.FirebaseResetPasswordUseCase
 import com.smialko.reminderhabitstracker.domain.usecases.firebaseUsecases.FirebaseSignInUseCase
 import com.smialko.reminderhabitstracker.domain.usecases.firebaseUsecases.FirebaseSignOutUseCase
 import com.smialko.reminderhabitstracker.domain.usecases.firebaseUsecases.FirebaseSignUpUseCase
@@ -57,7 +58,8 @@ object FirebaseModule {
         firebaseAuthState = FirebaseAuthStateUseCase(repository = repository),
         firebaseSignInUseCase = FirebaseSignInUseCase(repository = repository),
         firebaseSignUpUseCase = FirebaseSignUpUseCase(repository = repository),
-        firebaseSignOutUseCase = FirebaseSignOutUseCase(repository = repository)
+        firebaseSignOutUseCase = FirebaseSignOutUseCase(repository = repository),
+        firebaseResetPasswordUseCase = FirebaseResetPasswordUseCase(repository)
     )
 
     @Singleton

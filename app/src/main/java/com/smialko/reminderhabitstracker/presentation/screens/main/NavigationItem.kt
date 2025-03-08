@@ -24,8 +24,8 @@ sealed class NavigationItem(
     )
 
     data object Settings : NavigationItem(
-        screen = Screen.Settings,
-        titleResId = R.string.navigation_item_Settings,
-        icon = R.drawable.ic_settings
+        screen = Screen.Profile,
+        titleResId = R.string.navigation_item_Profile,
+        icon = R.drawable.ic_profile_empty
     )
 }

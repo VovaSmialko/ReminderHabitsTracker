@@ -1,6 +1,5 @@
 package com.smialko.reminderhabitstracker.presentation.onBoarding.loginScreen
 
-import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -20,11 +19,10 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberUpdatedState
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -36,7 +34,6 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.smialko.reminderhabitstracker.R
 import com.smialko.reminderhabitstracker.navigation.Screen
@@ -54,8 +51,8 @@ fun LoginScreen(
     navController: NavHostController
 ) {
 
-    val email = authViewModel.email
-    val password = authViewModel.password
+    var email by rememberSaveable { mutableStateOf("") }
+    var password by rememberSaveable { mutableStateOf("") }
 
     var isShowPassword by remember {
         mutableStateOf(false)
@@ -75,9 +72,9 @@ fun LoginScreen(
             Spacer(modifier = Modifier.height(20.dp))
             Column {
                 ReminderTextField(
-                    value = email.value,
+                    value = email,
                     onValueChange = {
-                        authViewModel.updateEmail(it)
+                        email = it
                     },
                     modifier = Modifier.fillMaxWidth(),
                     shape = MaterialTheme.shapes.small,
@@ -97,9 +94,9 @@ fun LoginScreen(
                     singleLine = true
                 )
                 ReminderTextField(
-                    value = password.value,
+                    value = password,
                     onValueChange = {
-                        authViewModel.updatePassword(it)
+                        password = it
                     },
                     modifier = Modifier.fillMaxWidth(),
                     shape = MaterialTheme.shapes.small,
@@ -144,8 +141,8 @@ fun LoginScreen(
                         BottomComponent(
                             onLoginClick = {
                                 authViewModel.signIn(
-                                    email = email.value,
-                                    password = password.value
+                                    email = email,
+                                    password = password
                                 )
                             },
                             navController
@@ -164,9 +161,7 @@ fun LoginScreen(
                                 if (response.data) {
                                     LaunchedEffect(key1 = true) {
                                         navController.navigate(Screen.ListTasks.route) {
-                                            popUpTo(Screen.Login.route) {
-                                                inclusive = true
-                                            }
+                                            popUpTo(Screen.Login.route)
                                         }
                                     }
                                 }

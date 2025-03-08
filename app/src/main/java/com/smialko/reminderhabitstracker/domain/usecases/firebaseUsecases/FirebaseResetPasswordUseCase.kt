@@ -3,10 +3,8 @@ package com.smialko.reminderhabitstracker.domain.usecases.firebaseUsecases
 import com.smialko.reminderhabitstracker.domain.repository.AuthenticationRepository
 import javax.inject.Inject
 
-class FirebaseSignUpUseCase @Inject constructor(
+class FirebaseResetPasswordUseCase @Inject constructor(
     private val repository: AuthenticationRepository
 ) {
-
-    operator fun invoke(email: String, password: String, fullName: String) =
-        repository.firebaseSignUp(email, password, fullName)
+    operator fun invoke(email: String) = repository.firebaseResetPassword(email)
 }

@@ -108,6 +108,12 @@ dependencies {
     //Splash Api
     implementation(libs.splash.core)
 
+    //Coil
+    implementation (libs.coil.compose)
+    implementation (libs.coil.svg)
+
+    implementation (libs.timber)
+
     //Firebase
     implementation(platform(libs.firebase.bom))
     implementation(libs.firebase.auth)
